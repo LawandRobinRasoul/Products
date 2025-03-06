@@ -1,0 +1,90 @@
+﻿@page "/viewProduct"
+@using ProductsClientAppBlazor.ApiClients
+@using System.Collections.Immutable
+@using ProductsClientAppBlazor.Models
+@rendermode InteractiveServer
+@inject ProductsApiClient productsApiClient
+
+<PageTitle>View Product</PageTitle>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ProductId</th>
+            <th scope="col">Name</th>
+            <th scope="col">ProductType</th>
+            <th scope="col">Colours</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (productsPageWithDetails != null)
+        {
+            @foreach (var product in productsPageWithDetails)
+            {
+                <tr>
+                    <th scope="row">@product.Id</th>
+                    <td>@product.Name</td>
+                    <td>@product.ProductType.Name</td>
+                    <td>@string.Join(", ", product.Colours.Select(c => c.Name))</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<button @onclick="PreviousPage" class="btn btn-secondary" disabled="@(currentPage == 0)">Previous</button>
+<button @onclick="NextPage" class="btn btn-primary">Next</button>
+<p>Viewing page @((currentPage) * PageSize) - @((currentPage + 1) * PageSize)</p>
+
+@code {
+
+    ImmutableList<ProductSlim> productsSortByCreated;
+    List<ProductDetails> productsPageWithDetails = new List<ProductDetails>();
+
+    private const int PageSize = 10;
+
+    private int currentPage = 0;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var products = await productsApiClient.GetProductsAsync();
+        productsSortByCreated = products.OrderByDescending(x => x.CreatedAt).ToImmutableList();
+
+       await LoadPage();
+    }
+
+    private async Task LoadPage()
+    {
+        // Cache already loaded products by index in productsSortByCreated
+        int startIndex = currentPage * PageSize;
+        int endIndex = Math.Min(startIndex + PageSize, productsSortByCreated.Count);
+
+        productsPageWithDetails.Clear();
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            productsPageWithDetails.Add(await productsApiClient.GetProductDetailsAsync(productsSortByCreated[i].Id));
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task NextPage()
+    {
+        if ((currentPage + 1) * PageSize < productsSortByCreated.Count)
+        {
+            currentPage++;
+            await LoadPage();
+        }
+    }
+
+    private async Task PreviousPage()
+    {
+        if (currentPage > 0)
+        {
+            currentPage--;
+            await LoadPage();
+        }
+    }
+}

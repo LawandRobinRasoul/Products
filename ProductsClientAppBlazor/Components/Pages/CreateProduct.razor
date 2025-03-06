@@ -1,0 +1,76 @@
+﻿@page "/createProduct"
+@using ProductsClientAppBlazor.ApiClients
+@using ProductsClientAppBlazor.Models
+@rendermode InteractiveServer
+@inject ProductsApiClient productsApiClient
+
+
+<PageTitle>Addproducts</PageTitle>
+
+<h1>Add products</h1>
+
+
+<form @onsubmit="AddProduct">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" @bind="newProduct.Name" />
+    </div>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Product type Id</label>
+        <input type="number" class="form-control" id="productTypeId" @bind="newProduct.ProductTypeId" />
+    </div>
+
+    <div class="mb-3">
+        <label for="colourId" class="form-label">Add Colour ID</label>
+        <div class="input-group">
+            <input type="number" class="form-control" id="colourId" @bind="colorId" />
+            <button type="button" class="btn btn-primary" @onclick="AddColorIdToProduct">Add</button>
+        </div>
+    </div>
+
+    @if (newProduct.ColourIds.Any())
+    {
+        <ul class="list-group mt-3">
+            @foreach (var id in newProduct.ColourIds)
+            {
+                <li>@id</li>
+            }
+        </ul>
+    }
+
+    <button type="submit" class="btn btn-primary">Create product</button>
+</form>
+
+@if (isProductCreated)
+{
+    <div class="alert alert-success" role="alert">
+        Product added successfully with id @productCreatedId
+    </div>
+}
+
+@code {
+
+    int colorId = 0;
+
+    bool isProductCreated = false;
+
+    int productCreatedId = 0;
+
+    ProductPost newProduct = new ProductPost();
+
+    private async Task AddProduct()
+    {
+        productCreatedId = (await productsApiClient.CreateProductAsync(newProduct)).Id;
+        isProductCreated = true;
+        newProduct = new ProductPost();
+        colorId = 0;
+        StateHasChanged();
+    }
+
+    private void AddColorIdToProduct()
+    {
+        newProduct.ColourIds.Add(colorId);
+    }
+}
