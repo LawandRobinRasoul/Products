@@ -12,7 +12,7 @@ using ProductsApi.Infra.Db;
 namespace ProductsApi.Migrations
 {
     [DbContext(typeof(ProductsDbContext))]
-    [Migration("20250305124551_InitialCreate")]
+    [Migration("20250307140356_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -108,6 +108,18 @@ namespace ProductsApi.Migrations
                             Id = 2,
                             ColourId = 2,
                             ProductId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ColourId = 5,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ColourId = 6,
+                            ProductId = 3
                         });
                 });
 
@@ -144,6 +156,20 @@ namespace ProductsApi.Migrations
                             CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Name = "LANDSKRONA",
                             ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Name = "MALMÖ",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            Name = "STOCKHOLM",
+                            ProductTypeId = 2
                         });
                 });
 
@@ -169,6 +195,11 @@ namespace ProductsApi.Migrations
                         {
                             Id = 1,
                             Name = "Sofa"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Table"
                         });
                 });
 

@@ -102,12 +102,21 @@ namespace ProductsApi.Migrations
             migrationBuilder.InsertData(
                 table: "ProductTypes",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Sofa" });
+                values: new object[,]
+                {
+                    { 1, "Sofa" },
+                    { 2, "Table" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "Name", "ProductTypeId" },
-                values: new object[] { 1, "LANDSKRONA", 1 });
+                values: new object[,]
+                {
+                    { 1, "LANDSKRONA", 1 },
+                    { 2, "MALMÖ", 1 },
+                    { 3, "STOCKHOLM", 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "ProductColours",
@@ -115,7 +124,9 @@ namespace ProductsApi.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 1 },
-                    { 2, 2, 1 }
+                    { 2, 2, 1 },
+                    { 3, 5, 2 },
+                    { 4, 6, 3 }
                 });
 
             migrationBuilder.CreateIndex(

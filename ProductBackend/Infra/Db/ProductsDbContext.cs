@@ -41,7 +41,8 @@ namespace ProductsApi.Infra.Db
 
 
             modelBuilder.Entity<ProductType>().HasData(
-                new ProductType { Id = 1, Name = "Sofa" }
+                new ProductType { Id = 1, Name = "Sofa" },
+                new ProductType { Id = 2, Name = "Table" }
             );
 
             modelBuilder.Entity<Colour>().HasData(
@@ -55,12 +56,18 @@ namespace ProductsApi.Infra.Db
             );
 
             modelBuilder.Entity<ProductDto>().HasData(
-                new ProductDto { Id = 1, Name = "LANDSKRONA", ProductTypeId = 1 }
+                new ProductDto { Id = 1, Name = "LANDSKRONA", ProductTypeId = 1 },
+                new ProductDto { Id = 2, Name = "MALMÖ", ProductTypeId = 1 },
+                new ProductDto { Id = 3, Name = "STOCKHOLM", ProductTypeId = 2 }
+
             );
 
             modelBuilder.Entity<ProductColour>().HasData(
                 new ProductColour { Id = 1, ProductId = 1, ColourId = 1 },
-                new ProductColour { Id = 2, ProductId = 1, ColourId = 2 }
+                new ProductColour { Id = 2, ProductId = 1, ColourId = 2 },
+                new ProductColour { Id = 3, ProductId = 2, ColourId = 5 },
+                new ProductColour { Id = 4, ProductId = 3, ColourId = 6 }
+
             );
         }
     }
