@@ -17,7 +17,7 @@ Follow these steps to set up and run the project locally.
 ## Backend: **ProductBackend/ProductApi**  
 
 ### 1 Configure the API  
-1. Open **ProductBackend** and create an `appsettings.Development.json` file.  
+1. Open **ProductBackend** and create an `appsettings.Development.json` file or just add settings to launchsettings.json.  
 2. Add the following configuration (replace placeholders with actual values):  
 
    ```json
@@ -54,7 +54,7 @@ dotnet run
 ## Frontend: **ProductsClientAppBlazor**  
 
 ### 1 Configure the Web App  
-1. Open **ProductsClientAppBlazor** and create an `appsettings.Development.json` file.  
+1. Open **ProductsClientAppBlazor** and create an `appsettings.Development.json` file or just add settings to launchsettings.json.  
 2. Add the following configuration (replace the API port with the correct value):  
 
    ```json
